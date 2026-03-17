@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: skillmap-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && python -m spacy download en_core_web_sm
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DB_NAME
+        value: skillmap_ai
+      - key: MONGODB_URI
+        value: mongodb://localhost:27017
+
+  - type: web
+    name: skillmap-frontend
+    runtime: static
+    rootDir: frontend
+    staticPublishPath: .
+    buildCommand: echo done
